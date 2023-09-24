@@ -13,10 +13,13 @@ public class PairsWithDifferenceK {
 	 */
 	public static int getPairsWithDifferenceK(int arr[], int k) {
 		HashMap<Integer, Integer> freq = new HashMap<>();
+		
 		for(int i : arr){
 			freq.put(i, freq.getOrDefault(i, 0) + 1);
 		}
+		
 		int ans = 0;
+		
 		for(int i : arr){
 			if(freq.containsKey(i)){
 				if(k != 0){
@@ -33,6 +36,7 @@ public class PairsWithDifferenceK {
 				freq.remove(i);
 			}
 		}
+		
 		return ans;
 	}
 
