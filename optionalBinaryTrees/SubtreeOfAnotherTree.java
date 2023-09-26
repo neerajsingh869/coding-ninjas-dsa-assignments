@@ -128,9 +128,9 @@ Sample Output 2:
 true
 false
 	 */
-	// Time complexity -> O(n*n), Space complexity -> O(n)
+	// Time complexity -> O(n*n), Space complexity -> O(n + m)
 	public static boolean isSubtree1(TreeNode<Integer> T, TreeNode<Integer> S) {
-		if (S == null) {
+		if (S == null || T == S) {
 			return true;
 		}
 		if (T == null) {
@@ -164,25 +164,24 @@ false
 		return levelOrder;
 	}
 	
-	// Time complexity -> O(n*n), Space complexity -> O(h)
+	// Time complexity -> O(n*m), Space complexity -> O(h)
 	public static boolean isSubtree2(TreeNode<Integer> T, TreeNode<Integer> S) {
-		if (S == null) {
+		if (S == null || T == S) {
 			return true;
 		}
 		if (T == null) {
 			return false;
 		}
-		if (T.val.equals(S.val)) {
-			if ( isIdentical(T, S) ) {
-				// duplicates can exists, therefore returning true
-				// only when trees are identical in case their roots
-				// are same
-				return true;
-			}
-		} 
+		if ( isIdentical(T, S) ) {
+			// duplicates can exists, therefore returning true
+			// only when trees are identical in case their roots
+			// are same
+			return true;
+		}
 		return isSubtree2(T.left, S) || isSubtree2(T.right, S);
 	}
 	
+	// Time complexity -> O(m)
 	public static boolean isIdentical(TreeNode<Integer> T, TreeNode<Integer> S) {
 		if (T == null && S == null) {
 			return true;
@@ -191,6 +190,143 @@ false
 			return false;
 		}
 		return isIdentical(T.left, S.left) && isIdentical(T.right, S.right); 
+	}
+	
+	// Time complexity -> O(n*m), Space complexity -> O(h)
+	// contains method has O(n*m) time complexity
+	public static boolean isSubtree3(TreeNode<Integer> T, TreeNode<Integer> S) {
+		if (S == null || T == S) {
+			return true;
+		}
+		if (T == null) {
+			return false;
+		}
+		
+		String inorderS = inorder(S);
+		String inorderT = inorder(T);
+		
+		if (!inorderT.contains(inorderS)) {
+			return false;
+		}
+		
+		String preorderS = preorder(S);
+		String preorderT = preorder(T);
+		
+		if (!preorderT.contains(preorderS)) {
+			return false;
+		}
+		
+		return true;
+	}
+	
+	// can use morris inorder traversal algo for space complexity O(1)
+	private static String inorder(TreeNode<Integer> node) {
+
+        // Base case.
+		if (node == null) {
+			return null;
+		}
+
+		return inorder(node.left) + " " + String.valueOf(node.val) + " " + inorder(node.right);
+	}
+	
+	// can use morris preorder traversal algo for space complexity O(1)
+	private static String preorder(TreeNode<Integer> node) {
+
+        // Base case.
+		if (node == null) {
+			return null;
+		}
+
+		return String.valueOf(node.val) + " " + preorder(node.left) + " " + preorder(node.right);
+	}
+	
+	// Best approach
+	// Time complexity -> O(n + m), Space complexity -> O(h) where h is height of T
+	// Approach is same as isSubtree3 but search algorithm has changed
+	public static boolean isSubtree4(TreeNode<Integer> T, TreeNode<Integer> S) {
+		if (S == null || T == S) {
+			return true;
+		}
+		if (T == null) {
+			return false;
+		}
+		
+		String inorderS = inorder(S);
+		String inorderT = inorder(T);
+		
+		if (!KMPSearch(inorderS, inorderT)) {
+			return false;
+		}
+		
+		String preorderS = preorder(S);
+		String preorderT = preorder(T);
+		
+		if (!KMPSearch(preorderS, preorderT)) {
+			return false;
+		}
+		
+		return true;
+	}
+	
+	public static boolean KMPSearch(String pat, String txt) {
+		int n = pat.length();
+		int m = txt.length();
+		
+		int[] lps = new int[n];
+		
+		calculateLPSArray(pat, lps);
+		
+		int i = 0, j = 0;
+		while (i < m) {
+			if (pat.charAt(j) == txt.charAt(i)) {
+				i++;
+				j++;
+			}
+			if (j == n) {
+				// pattern match successful
+				j = lps[j-1];
+				return true;
+			} else if (i < m && pat.charAt(j) != txt.charAt(i)) {
+				if (j != 0) {
+					j = lps[j-1];
+				} else {
+					i++;
+				}
+			}
+		}
+		
+		return false;
+	}
+	
+	public static void calculateLPSArray(String pat, int[] lps) {
+		int n = pat.length();
+		
+		// length of the previous longest prefix suffix
+		int len = 0;
+		int i = 1;
+		
+		lps[0] = 0;
+		
+		while (i < n) {
+			if (pat.charAt(i) == pat.charAt(len)) {
+				len++;
+				lps[i] = len;
+				i++;
+			} else {
+				// This is tricky. Consider the example.
+                // AAACAAAA and i = 7. The idea is similar
+                // to search step.
+				if (len != 0) {
+					len = lps[len-1];
+					// not incrementing i here
+				} else {
+					lps[i] = 0;
+					// or lps[i] = len
+					i++;
+				}
+			}
+		}
 	}
 	
 	 public static class FastReader {
