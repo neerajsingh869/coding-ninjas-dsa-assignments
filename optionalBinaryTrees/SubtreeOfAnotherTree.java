@@ -136,6 +136,8 @@ false
 		if (T == null) {
 			return false;
 		}
+		// level order denoting null child identifies a 
+		// tree uniquely
 		ArrayList<Integer> levelOrderT = getLevelOrder(T);
 		ArrayList<Integer> levelOrderS = getLevelOrder(S);
 		if (levelOrderT.equals(levelOrderS)) {
