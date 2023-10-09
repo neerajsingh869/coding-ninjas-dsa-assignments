@@ -10,6 +10,10 @@ import java.util.ArrayList;
 public class MinPriorityQueue<T> {
 	private ArrayList<Element<T>> heap;
 	
+	public MinPriorityQueue() {
+		heap = new ArrayList<>();
+	}
+	
 	private void swapElements(int idx1, int idx2) {
 		Element<T> temp = heap.get(idx1);
 		heap.set(idx1, heap.get(idx2));
