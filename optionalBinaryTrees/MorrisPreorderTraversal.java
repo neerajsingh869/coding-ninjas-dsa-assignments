@@ -38,7 +38,7 @@ Explanation:
             if(curr.left == null){
                 curr = curr.right;
             }
-            // If no right subtree exists, then move to right
+            // If no right subtree exists, then move to left
             // subtree
             else if(curr.right == null){
                 curr = curr.left;

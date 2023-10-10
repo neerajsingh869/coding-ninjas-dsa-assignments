@@ -1,6 +1,5 @@
 package optionalBinaryTrees;
 
-import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.Stack;
 
@@ -77,40 +76,48 @@ class QueueUsingLL<T> {
 public class InorderTraversalWithoutRecursion {
 	
 	/*
-	 * Given a binary tree, print the inorder traversal of a given tree without using recursion.
-	Inorder traversal is: LeftChild Root RightChild
-	Input format :
-	Elements in the level order form (separated by space)
-	(If any node does not have left or right child, take -1 in its place)
-	Output Format :
-	Inorder traversal, elements separated by space.
-	Sample Input:
-	1 2 3 4 5 -1 -1 -1 -1 -1 -1
-	Sample Output:
-	4 2 5 1 3
-	Explanation:
-	The input tree given to you is:
-	                        1
-	                      /   \
-	                     2     3
-	                    / \
-	                   4   5
-	The inorder traversal of the given tree will be :
-	4 2 5 1 3
+	 * Given a binary tree, print the inorder traversal of a given tree 
+	 * without using recursion.
+	 * 
+		Inorder traversal is: LeftChild Root RightChild
+		
+		Input format :
+		Elements in the level order form (separated by space)
+		(If any node does not have left or right child, take -1 in its place)
+		
+		Output Format :
+		Inorder traversal, elements separated by space.
+		
+		Sample Input:
+		1 2 3 4 5 -1 -1 -1 -1 -1 -1
+		Sample Output:
+		4 2 5 1 3
+		Explanation:
+		The input tree given to you is:
+		                        1
+		                      /   \
+		                     2     3
+		                    / \
+		                   4   5
+		The inorder traversal of the given tree will be :
+		4 2 5 1 3
 	 */
 	
 	// Time complexity -> O(n), Space complexity -> O(h)
 	public static void inOrder(BinaryTreeNode<Integer> root) {
         Stack<BinaryTreeNode<Integer>> st = new Stack<>();
         BinaryTreeNode<Integer> temp = root;
+        
         while(temp != null || !st.isEmpty()){
             while(temp != null){
                 st.push(temp);
                 temp = temp.left;
             }
+            
             BinaryTreeNode<Integer> tempAns = st.peek();
             System.out.print(tempAns.data + " ");
             st.pop();
+            
             temp = tempAns.right;
         }
     }
