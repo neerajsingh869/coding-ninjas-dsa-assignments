@@ -150,13 +150,13 @@ public class MaximumCandies {
 		for (int i = 0; i < t; i++) {
 
 			// Get the answer from scaffold/solution
-			Solution.maxCandies(arr[i].length, arr[i], arr1[i]);
+			maxCandies(arr[i].length, arr[i], arr1[i]);
 		}
 	}
 
 	public static void executeAndPrintOutput() {
 		for (int i = 0; i < t; i++) {
-			boolean[] result = Solution.maxCandies(arr[i].length, arr[i], arr1[i]);
+			boolean[] result = maxCandies(arr[i].length, arr[i], arr1[i]);
 			for (int j = 0; j < result.length; j++) {
 				if (result[j])
 					System.out.print("True");
@@ -171,9 +171,8 @@ public class MaximumCandies {
 	}
 
 	public static void main(String[] args) throws NumberFormatException, IOException {
-		Runner runner = new Runner();
-		runner.takeInput();
-		runner.executeAndPrintOutput();
+		takeInput();
+		executeAndPrintOutput();
 	}
 
 }
