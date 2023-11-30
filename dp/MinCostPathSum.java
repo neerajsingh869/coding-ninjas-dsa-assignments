@@ -1,5 +1,9 @@
 package dp;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+
 public class MinCostPathSum {
 	
 	/*
@@ -78,7 +82,33 @@ public class MinCostPathSum {
     }
     
     // Solving Using Tabulation
-    public static int minCostPathTabu(int[][] input) {
+    
+    public static int minCostPathTabu1(int[][] input) {
+		int m = input.length;
+		int n = input[0].length;
+		int[][] dp = new int[m+1][n+1];
+		for(int i = 0; i<=m; i++){
+			dp[i][n] = Integer.MAX_VALUE;
+		}
+		for(int j = 0; j<=n; j++){
+			dp[m][j] = Integer.MAX_VALUE;
+		}
+		for(int i = m-1; i>=0; i--){
+			for(int j = n-1; j>=0; j--){
+				if(i == m-1 && j == n-1){
+					dp[i][j] = input[i][j];
+				}
+				else{
+					dp[i][j] = input[i][j] + Math.min(dp[i + 1][j], 
+												Math.min(dp[i][j + 1], dp[i + 1][j + 1]));
+				}
+				
+			}
+		}
+		return dp[0][0];
+	}
+    
+    public static int minCostPathTabu2(int[][] input) {
         int m = input.length;
         if(m == 0){
             return Integer.MAX_VALUE;
@@ -106,10 +136,67 @@ public class MinCostPathSum {
         return dp[0][0];
 	}
     
-    
+    public static int minCostPathTabu3(int[][] input) {
+		int m = input.length;
+		if (m == 0) {
+			return Integer.MAX_VALUE;
+		}
+		int n = input[0].length;
+		
+		int[][] dp = new int[m + 1][n + 1];
+		// dp[i][j] -> min cost path to reach from cell (0, 0) to (i - 1, j - 1)
+		for (int i = 0; i <= m; i++) {
+			for (int j = 0; j <= n; j++) {
+				if (i == 0 || j == 0) {
+					dp[i][j] = Integer.MAX_VALUE;
+				} else {
+					int ansToLeft = dp[i][j - 1];
+					int ansToUp = dp[i - 1][j];
+					int ansToDiag = dp[i - 1][j - 1];
 
-	public static void main(String[] args) {
-
+					int minTempCost = Math.min(ansToDiag, Math.min(ansToLeft, ansToUp));
+					if (minTempCost == Integer.MAX_VALUE) {
+						dp[i][j] = input[i - 1][j - 1];
+					} else {
+						dp[i][j] = input[i - 1][j - 1] + minTempCost;
+					}
+				}
+			}
+		}
+		
+		// dp[m][n] -> min cost path to reach from cell (0, 0) to (m - 1, n - 1)
+		return dp[m][n];
 	}
 
+    static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    
+    public static int[][] take2DInput() throws IOException {
+        String[] strRowsCols = br.readLine().trim().split("\\s");
+        int mRows = Integer.parseInt(strRowsCols[0]);
+        int nCols = Integer.parseInt(strRowsCols[1]);
+
+        if (mRows == 0) {
+            return new int[0][0];
+        }
+
+
+        int[][] mat = new int[mRows][nCols];
+
+        for (int row = 0; row < mRows; row++) {
+            String[] strNums; 
+            strNums = br.readLine().trim().split("\\s");
+            
+            for (int col = 0; col < nCols; col++) {
+                mat[row][col] = Integer.parseInt(strNums[col]);
+            }
+        }
+
+        return mat;
+    }
+
+
+    public static void main(String[] args) throws NumberFormatException, IOException {
+        int[][] mat = take2DInput();
+        System.out.println(minCostPathTabu3(mat));
+    }
 }
