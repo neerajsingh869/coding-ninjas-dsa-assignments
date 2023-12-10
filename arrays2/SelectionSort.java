@@ -46,7 +46,7 @@ public class SelectionSort {
     }
 
 	// Function to implement Stable selection sort algorithm
-	public static void selectionSort3(int[] arr) {
+	public static void selectionSort2(int[] arr) {
 		int n = arr.length;
 		for(int i = 0; i<n-1; i++) {
 			int minIdx = i;
@@ -64,9 +64,41 @@ public class SelectionSort {
 		}
 	}
 	
+	// recursive approach to implement selection sort
+	public static void selectionSort3(int[] arr) {
+		selectionSort3(arr, 0);
+	}
+	
+	private static void selectionSort3(int[] arr, int i) {
+		int n = arr.length;
+		if (i >= n) {
+			return;
+		}
+		
+		int smallestEleIdx = getMinIndex(arr, i);
+		
+		int temp = arr[i];
+		arr[i] = arr[smallestEleIdx];
+		arr[smallestEleIdx] = temp;
+		
+		selectionSort3(arr, i + 1);
+	}
+	
+	private static int getMinIndex(int[] arr, int i) {
+		int minIdx = i;
+		
+		for (int j = i + 1; j < arr.length; j++) {
+			if (arr[j] < arr[minIdx]) {
+				minIdx = j;
+			}
+		}
+		
+		return minIdx;
+	}
+	
 	public static void main(String[] args) {
 		int[] arr = takeInput();
-		selectionSort3(arr);
+		selectionSort2(arr);
 		printArray(arr);
 	}
 
