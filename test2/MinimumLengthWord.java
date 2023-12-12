@@ -25,7 +25,7 @@ a
 	 */
 
 	// Time complexity -> O(n), Space complexity -> O(n)
-	public static String minLengthWord(String input){
+	public static String minLengthWord1(String input){
 		int n = input.length();
         int minWordLen = Integer.MAX_VALUE;
         int wordLen = 0;
@@ -52,11 +52,65 @@ a
         return minWord;
 	}
 	
+	// Time complexity -> O(n), Space complexity -> O(n)
+	public static String minLengthWord2(String input){
+		int n = input.length();
+		int minLength = Integer.MAX_VALUE;
+		String minWord = "";
+		String tempWord = "";
+
+		for (int i = 0; i < n; i++) {
+			if (input.charAt(i) == ' ') {
+				if (tempWord.length() < minLength) {
+					minWord = tempWord;
+					minLength = tempWord.length();
+					
+				} 
+				tempWord = "";
+			}	else {
+				tempWord += input.charAt(i);
+			}
+		}
+
+		if (tempWord.length() < minLength) {
+			minWord = tempWord;
+			minLength = tempWord.length();
+		}
+
+		return minWord;
+	}
+	
+	// Time complexity -> O(n), Space complexity -> O(n)
+	public static String minLengthWord3(String input){
+		int n = input.length();
+		String minWord = "";
+		int minLength = Integer.MAX_VALUE;
+		int i = 0, j = 0;
+		while (j < n) {
+			if (input.charAt(j) == ' ') {
+				if (j - i < minLength) {
+					minLength = j - i;
+					minWord = input.substring(i, j);
+				}
+				i = j + 1;
+			}
+
+			j++;
+		}
+
+		if (j - i < minLength) {
+			minLength = j - i;
+			minWord = input.substring(i, j);
+		}
+
+		return minWord;
+	}
+	
 	public static void main(String[] args) {
 		Scanner s = new Scanner(System.in);
 		String str = s.nextLine();
 		
-		System.out.println(minLengthWord(str));
+		System.out.println(minLengthWord3(str));
 	}
 
 }
