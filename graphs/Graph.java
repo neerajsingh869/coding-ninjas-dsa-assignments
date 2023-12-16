@@ -370,6 +370,28 @@ public class Graph {
 		return null;
 	}
 	
+	// this approach will provide you all paths. If you want any one path, this approach
+	// won't give you right answer. Since it doesn't return anything so there is no way
+	// you can figure out when to stop like you can't find which vertices will lead to answer
+	public static void printPath(int[][] adjMat, int source, int target, String ansTillNow, boolean[] isVisited) {
+		if (source == target) {
+			ansTillNow = source + " " + ansTillNow;
+			System.out.println(ansTillNow);
+			return;
+		}
+		int v = adjMat.length;
+		if (source >= v || target >= v) {
+			return ;
+		}
+
+		isVisited[source] = true;
+		for (int i = 0; i < v; i++) {
+			if (adjMat[source][i] == 1 && !isVisited[i]) {
+				printPath(adjMat, i, target, source + " " + ansTillNow, isVisited);
+			}
+		}
+	}
+	
 	/*
 	 * Given an undirected graph G(V,E), check if the graph 
 	 * G is connected graph or not.
@@ -567,14 +589,14 @@ public class Graph {
 	 * uppercase Latin characters (i.e. A,B,...,Z). Now Gary 
 	 * is getting bored and wants to play a game. The key of 
 	 * this game is to find a cycle that contain dots of same 
-	 * colour. Formally, we call a sequence of dots d1, d2, ..., 
+	 * colour. Formally, we call a sequence of dots d1,â€‰d2,â€‰...,â€‰
 	 * dk a cycle if and only if it meets the following condition:
 	 * 
-			1. These k dots are different: if i ≠ j then di is different 
+			1. These k dots are different: if iâ€‰â‰ â€‰j then di is different 
 			from dj.
 			2. k is at least 4.
 			3. All dots belong to the same colour.
-			4. For all 1 ≤ i ≤ k - 1: di and di + 1 are adjacent. 
+			4. For all 1â€‰â‰¤â€‰iâ€‰â‰¤â€‰kâ€‰-â€‰1: di and diâ€‰+â€‰1 are adjacent. 
 			Also, dk and d1 should also be adjacent. Cells x and y are 
 			called adjacent if they share an edge.
 	 * 
@@ -659,7 +681,7 @@ public class Graph {
 	/*
 	 * Given a NxM matrix containing Uppercase English Alphabets 
 	 * only. Your task is to tell if there is a path in the given 
-	 * matrix which makes the sentence “CODINGNINJA” .
+	 * matrix which makes the sentence â€œCODINGNINJAâ€� .
 	 * 
 	 * There is a path from any cell to all its neighbouring cells. 
 	 * For a particular cell, neighbouring cells are those cells that 
