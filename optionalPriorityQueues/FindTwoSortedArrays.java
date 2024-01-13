@@ -7,31 +7,67 @@ import java.io.InputStreamReader;
 public class FindTwoSortedArrays {
 	
 	/*
-	 * You are given two sorted arrays with size M and N respectively, you have to merge them into a sorted array.
-Note: Try to merge them with O(1) space complexity.
-Input format:
-Line 1 : Size of first array i.e. M
- Line 2 : M elements of first array separated by space
- Line 3 : Size of second array i.e. N
- Line 2 : N elements of second array separated by space
-Output format:
-The output contains the two merged sorted arrays in different lines.
-Constraints:
-1<=M,N<=100000
-Sample Input:
-6
-1 5 9 10 15 20
-4
-2 3 8 13
-Sample Output:
-1 2 3 5 8 9
-10 13 15 20
-	 */
-	
-	public static void merge(int arr1[], int m, int arr2[], int n) {
+	 * You are given two sorted arrays with size M and N respectively, 
+	 * you have to merge them into a sorted array.
+	 * 
+		Note: Try to merge them with O(1) space complexity.
 		
-		// Write your code here
-
+		Input format:
+		Line 1 : Size of first array i.e. M
+		 Line 2 : M elements of first array separated by space
+		 Line 3 : Size of second array i.e. N
+		 Line 2 : N elements of second array separated by space
+		 
+		Output format:
+		The output contains the two merged sorted arrays in different lines.
+		
+		Constraints:
+		1<=M,N<=100000
+		
+		Sample Input:
+		6
+		1 5 9 10 15 20
+		4
+		2 3 8 13
+		
+		Sample Output:
+		1 2 3 5 8 9
+		10 13 15 20
+	 */
+	// Time complexity -> O(n + m), Space complexity -> O(n + m)
+	public static void merge(int arr1[], int m, int arr2[], int n) {
+		int[] ans = new int[m + n];
+		int k = 0;
+		int i = 0, j = 0;
+		while (i < m && j < n) {
+			if (arr1[i] < arr2[j]) {
+				ans[k++] = arr1[i];
+				i++;
+			} else {
+				ans[k++] = arr2[j];
+				j++;
+			}
+		}
+		
+		while (i < m) {
+			ans[k++] = arr1[i];
+			i++;
+		}
+		
+		while (j < n) {
+			ans[k++] = arr2[j];
+			j++;
+		}
+		
+		k = 0;
+		while (k < m) {
+			arr1[k] = ans[k];
+			k++;
+		}
+		while (k < m + n) {
+			arr2[k - m] = ans[k];
+			k++;
+		}
 	}
 
 	static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
