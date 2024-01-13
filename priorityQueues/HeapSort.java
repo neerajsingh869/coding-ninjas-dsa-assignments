@@ -9,7 +9,7 @@ public class HeapSort {
 	
 	public static void inplaceHeapSort1(int arr[]) {
 		int n = arr.length;
-		// Converting the array into min-heap (Takes O(nlogn) time)
+		// Converting the array into min-heap (Takes O(n*log(n) time)
 		for(int i = 0; i<n; i++) {
 			upHeapify(arr, 0, i);
 			
@@ -45,12 +45,12 @@ public class HeapSort {
 		int n = arr.length;
 		// Converting the array into min-heap (Takes O(n) time)
 		// Here, we are leaving leaf nodes since they are already 
-		// heap in themselves
+		// heap in themselves (n/2 leaf nodes in heap with nodes n)
 		for(int i = n/2 - 1; i>=0; i--) {
 			downHeapify(arr, i, n);
 		}
 		// Removing min from heap and putting it 
-		// in the last of array
+		// in the last of array (Takes O(n*log(n)) time)
 		for(int i = 0; i<n-1; i++) {
 			int toRemove = arr[0];
 			arr[0] = arr[n-i-1];
