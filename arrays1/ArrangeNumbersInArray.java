@@ -28,19 +28,14 @@ public class ArrangeNumbersInArray {
     }
 	
 	public static void arrange2(int[] arr, int n) {
-    	//Your code goes here
-		int left = 0, right = n-1;
+        int left = 0, right = n - 1;
         int counter = 1;
-        while(left <= right){
-            if(counter%2 != 0){
-                arr[left] = counter;
-                counter++;
-                left++;
-            }
-            else{
-                arr[right] = counter;
-                counter++;
-                right--;
+
+        while (left <= right) {
+            if (counter % 2 == 0) {
+                arr[right--] = counter++;
+            } else {
+                arr[left++] = counter++;
             }
         }
     }

@@ -61,7 +61,7 @@ public class PairSum {
 	}
 	
 	// Time Complexity -> O(n), Space Complexity -> O(n)
-	public static int pairSum(int[] arr, int num) {
+	public static int pairSum3(int[] arr, int num) {
 		int n = arr.length;
         HashMap<Integer, Integer> freq = new HashMap<>();
         int ans = 0;
@@ -119,7 +119,7 @@ public class PairSum {
 
             int[] arr = takeInput();
             int num = Integer.parseInt(br.readLine().trim());
-            System.out.println(pairSum(arr, num));
+            System.out.println(pairSum3(arr, num));
 
             t -= 1;
         }
