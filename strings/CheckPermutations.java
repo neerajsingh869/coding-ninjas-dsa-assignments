@@ -39,7 +39,16 @@ public class CheckPermutations {
         char[] str2Char = str2.toCharArray();
         Arrays.sort(str1Char);
         Arrays.sort(str2Char);
-        return Arrays.equals(str1Char, str2Char);
+        
+        boolean isPermutation = true;
+		for (int i = 0; i < str1.length(); i++) {
+			if (str1Char[i] != str2Char[i]) {
+				isPermutation = false;
+				break;
+			}
+		}
+
+		return isPermutation;
 	}
 	
 	public static void main(String[] args) {

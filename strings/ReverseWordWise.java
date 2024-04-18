@@ -8,7 +8,7 @@ public class ReverseWordWise {
 	 * at 2nd place and so on. Individual words should remain as it is.
 	 */
 	
-	public static String reverseWordWise(String input) {
+	public static String reverseWordWise1(String input) {
 		int n = input.length();
         String ans = "";
         int stIdx = 0;
@@ -20,6 +20,15 @@ public class ReverseWordWise {
         }
         ans = input.substring(stIdx) + ans;
         return ans;
+	}
+	
+	public static String reverseWordWise2(String sentence) {
+	    String[] words = sentence.split("\\s+");
+	    StringBuilder reversed = new StringBuilder();
+	    for (int i = words.length - 1; i >= 0; i--) {
+	        reversed.append(words[i]).append(" ");
+	    }
+	    return reversed.toString().trim();
 	}
 
 	public static void main(String[] args) {
