@@ -1403,6 +1403,39 @@ public class LinkedListUse {
         return reverseLL2(newHead);
 	}
 	
+	/*
+	 * Given a singly linked list, remove the nth node from the end 
+	 * of the list and return its head.
+	 */
+	// Time complexity -> O(n), Space complexity -> O(1)
+	public static Node<Integer> removeNthLastNode(Node<Integer> head, int n) {
+		// Point two pointers, right and left, at head.
+		Node<Integer> right = head;
+		Node<Integer> left = head;
+
+	    // Move right pointer n elements away from the left pointer.
+	    for (int i = 0; i < n; i++) {
+	      right = right.next;
+	    }
+
+	    // Removal of the head node.
+	    if (right == null) {
+	      return head.next;
+	    }
+
+	    // Move both pointers until right pointer reaches the last node.
+	    while (right.next != null) {
+	      right = right.next;
+	      left = left.next;
+	    }
+
+	    // At this point, left pointer points to (n-1)th element.
+	    // So link it to next to next element of left.
+	    left.next = left.next.next;
+
+	    return head;
+    }
+	
 	// Main function to check the correctness of above functions
 	public static void main(String[] args) {
 		Node<Integer> head = takeInput();
