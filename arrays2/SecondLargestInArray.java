@@ -6,12 +6,34 @@ import java.util.Scanner;
 public class SecondLargestInArray {
 	
 	/*
-	 * You have been given a random integer array/list(ARR) of size N. 
-	 * You are required to find and return the second largest element 
-	 * present in the array/list.
-	 * 
-	 * If N <= 1 or all the elements are same in the array/list then 
-	 * return -2147483648 or -2 ^ 31(It is the smallest value for the range of Integer)
+	 * You have been given a random integer array/list(ARR) 
+	 * of size N. You are required to find and return the 
+	 * second largest element present in the array/list.
+
+		Detailed explanation ( Input/output format, Notes, Images )
+		Input format :
+		The first line contains an integer 'N' representing the 
+		size of the array/list.
+		
+		The second line contains 'N' single space separated integers 
+		representing the elements in the array/list.
+		Output Format :
+		Return the second largest element in the array/list.
+		Constraints :
+		0 <= N <= 10^2
+		1<=arr[i]<=10^3
+		
+		Time Limit: 1 sec
+		Sample Input 1:
+		5
+		4 3 10 9 2
+		Sample Output 1:
+		9
+		Sample Input 2:
+		7
+		13 6 31 14 29 44 3
+		Sample Output 2:
+		31
 	 */
 	
 	// Simple approach
@@ -31,7 +53,7 @@ public class SecondLargestInArray {
         return ans;
     }
 	
-	// Better approach
+	// Better approach (Single scan)
 	public static int secondLargestElement2(int[] arr) {
         int n = arr.length;
         
@@ -51,6 +73,7 @@ public class SecondLargestInArray {
         return secondLargest;
     }
 	
+	// Better approach (Multiple scans)
 	public static int secondLargestElement3(int[] arr, int n) {
     	int max = Integer.MIN_VALUE;
         int secondMax = Integer.MIN_VALUE;

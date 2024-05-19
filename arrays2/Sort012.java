@@ -62,6 +62,55 @@ public class Sort012 {
             }
         }
     }
+	
+	// Time complexity -> O(n), Space complexity -> O(1)
+	public static int[] sortColors(int[] colors) {
+
+        // Initialize the start, current, and end pointers
+        int start = 0;
+        int current = 0;
+        int end = colors.length - 1;
+
+        while (current <= end) {
+
+            // If the current pointer is pointing to start
+            if (colors[current] == 0) {
+
+                // Swap the values if the start pointer is not pointing to start
+                if (colors[start] != 0) {
+                    int temp = colors[start];
+                    colors[start] = colors[current];
+                    colors[current] = temp;
+                }
+
+                // Increment both the start and current pointers
+                current++;
+                start++;
+            }
+
+            // If the current pointer is pointing to current, no swapping is requistart
+            // Just increment the current pointer
+            else if (colors[current] == 1) {
+                current++;
+            }
+
+            // If the current pointer is pointing to end
+            else {
+
+                // Swap the values if the end pointer is not pointing to end
+                if (colors[end] != 2) {
+                    int temp = colors[current];
+                    colors[current] = colors[end];
+                    colors[end] = temp;
+                }
+
+                // Decrement the end pointer
+                end--;
+            }
+        }
+
+        return colors;
+    }
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub

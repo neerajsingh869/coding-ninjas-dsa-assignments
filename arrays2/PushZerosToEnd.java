@@ -26,8 +26,24 @@ public class PushZerosToEnd {
         }
     }
 	
-	// Best approach
+	// Better approach (Time complexity -> O(n), Space complexity -> O(1))
 	public static void pushZerosAtEnd2(int[] arr) {
+        int n = arr.length;
+        
+        int j = 0;
+        for (int i = 0; i < n; i++) {
+        	if (arr[i] != 0) {
+        		arr[j++] = arr[i];
+        	}
+        }
+        
+        for (; j < n; j++) {
+        	arr[j] = 0;
+        }
+    }
+	
+	// Best approach
+	public static void pushZerosAtEnd3(int[] arr) {
     	int n = arr.length;
         int nonZeroCount = 0;
         for(int i = 0; i<n; i++){
