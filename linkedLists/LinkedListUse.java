@@ -1,5 +1,8 @@
 package linkedLists;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.Scanner;
 
 public class LinkedListUse {
@@ -407,7 +410,6 @@ public class LinkedListUse {
         return head;
 	}
 	
-	// Best approach
 	public static Node<Integer> removeDuplicates3(Node<Integer> head) {
 		if(head == null){
 			return head;
@@ -421,6 +423,45 @@ public class LinkedListUse {
 			temp1.next = temp2;
 			temp1 = temp2;
 		}
+		return head;
+	}
+	
+	// Better approach
+	public static Node<Integer> removeDuplicates4(Node<Integer> head) {
+		if (head == null) return head;
+		
+		Node<Integer> curr = head;
+		// fon -> first ocurrence node
+		Node<Integer> fon = curr;
+
+		while (curr != null) {
+			if (curr.next != null && !curr.next.data.equals(curr.data)) {
+				fon.next = curr.next;
+				curr = curr.next;
+				fon = curr;
+			} else {
+				curr = curr.next;
+			}
+		}
+
+		fon.next = null;
+		return head;
+	}
+	
+	// Best approach
+	public static Node<Integer> removeDuplicates5(Node<Integer> head) {
+		if (head == null) return head;
+		
+		Node<Integer> curr = head;
+
+		while (curr != null) {
+			if (curr.next != null && curr.next.data.equals(curr.data)) {
+				curr.next = curr.next.next;
+			} else {
+				curr = curr.next;
+			}
+		}
+
 		return head;
 	}
 	
@@ -1437,12 +1478,54 @@ public class LinkedListUse {
     }
 	
 	// Main function to check the correctness of above functions
-	public static void main(String[] args) {
-		Node<Integer> head = takeInput();
-//		Node<Integer> sortedHead = mergeSort(head);
-		int k = 3;
-		head = kReverse2(head, k);
-		printLinkedList(head);
-	}
+	static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    
+    public static Node<Integer> takeInput1() throws IOException {
+        Node<Integer> head = null, tail = null;
+
+        String[] datas = br.readLine().trim().split("\\s");
+
+        int i = 0;
+        while(i < datas.length && !datas[i].equals("-1")) {
+            int data = Integer.parseInt(datas[i]);
+            Node<Integer> newNode = new Node<Integer>(data);
+            if(head == null) {
+                head = newNode;
+                tail = newNode;
+            }
+            else {
+                tail.next = newNode;
+                tail = newNode;
+            }
+            i += 1;
+        }
+
+        return head;
+    }
+    
+    public static void print(Node<Integer> head){
+        while(head != null) {
+            System.out.print(head.data + " ");
+            head = head.next;
+        }
+        
+        System.out.println();
+    }
+    
+    public static void main(String[] args) throws NumberFormatException, IOException {
+        int t = Integer.parseInt(br.readLine().trim());
+
+        while (t > 0) {
+
+            Node<Integer> head = takeInput1(); 
+
+            boolean ans = isPalindrome1(head);
+            System.out.println(ans);
+
+            t -= 1;
+
+        }
+        
+    }
 
 }
