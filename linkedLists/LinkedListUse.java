@@ -1153,6 +1153,45 @@ public class LinkedListUse {
         return oddHead;
 	}
 	
+	public static Node<Integer> evenAfterOdd3(Node<Integer> head) {
+		Node<Integer> oddHead = null;
+        Node<Integer> evenHead = null;
+        Node<Integer> oddTail = null;
+        Node<Integer> evenTail = null;
+        Node<Integer> curr = head;
+
+        while (curr != null) {
+            Node<Integer> temp = curr.next;
+            
+            if (curr.data % 2 != 0) {
+                if (oddHead == null) {
+                    oddHead = curr;
+                    oddTail = oddHead;
+                } else {
+                    oddTail.next = curr;
+                    oddTail = curr;
+                }
+
+                if (evenTail != null) {
+                    curr.next = evenHead;
+                    evenTail.next = temp;
+                }
+            } else {
+                if (evenHead == null) {
+                    evenHead = curr;
+                    evenTail = evenHead;
+                } else {
+                    evenTail.next = curr;
+                    evenTail = curr;
+                }
+            }
+
+            curr = temp;
+        }
+
+        return oddHead == null ? evenHead : oddHead;
+	}
+	
 	/*
 	 * Function to delete N nodes after every M nodes.
 	 */
