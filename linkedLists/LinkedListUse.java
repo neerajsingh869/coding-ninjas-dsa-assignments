@@ -1437,6 +1437,41 @@ public class LinkedListUse {
         return prev;
 	}
 	
+	// Best approach to solve
+	// Time complexity -> O(n), Space complexity -> O(1)
+	public static Node<Integer> kReverse4(Node<Integer> head, int k) {
+		if (head == null || head.next == null || k == 0 || k == 1) return head;
+
+        Node<Integer> curr = head;
+        Node<Integer> prev = null;
+        Node<Integer> prevTail = null;
+        Node<Integer> currHead = curr;
+
+        while (curr != null) {
+            int i = 0;
+            for (; i < k && curr != null; i++) {
+                Node<Integer> temp = curr.next;
+                curr.next = prev;
+                prev = curr;
+                curr = temp;
+            }
+
+            if (prevTail == null) {
+                head = prev;
+            }
+
+            currHead.next = curr;
+            if (prevTail != null) {
+                prevTail.next = prev;
+            }
+            prevTail = currHead;
+            currHead = curr;
+            prev = null;
+        }
+
+        return head;
+	}
+	
 	/*
 	 * Given a large number represented in the form of a linked list. 
 	 * Write code to increment the number by 1 in-place(i.e. without 
