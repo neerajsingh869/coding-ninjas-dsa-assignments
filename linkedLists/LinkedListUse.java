@@ -1423,17 +1423,19 @@ public class LinkedListUse {
 	// using reverse function) -> Best Approach
 	// Time and space complexity are same.
 	public static Node<Integer> kReverse3(Node<Integer> head, int k) {
-		if(head == null || k == 0) return head;
-        Node<Integer> prev = null, curr = head, fwd = head;
-        int i = 0;
-        while(curr!=null && i<k){
-            fwd = curr.next;
+		if (k == 0 || k == 1 || head == null || head.next == null) return head;
+
+        Node<Integer> prev = null;
+        Node<Integer> curr = head;
+        for (int i = 0; i < k && curr != null; i++) {
+            Node<Integer> temp = curr.next;
             curr.next = prev;
             prev = curr;
-            curr = fwd;
-            i++;
+            curr = temp;
         }
+
         head.next = kReverse3(curr, k);
+
         return prev;
 	}
 	
