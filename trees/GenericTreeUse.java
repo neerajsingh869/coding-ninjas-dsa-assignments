@@ -236,8 +236,9 @@ public class GenericTreeUse {
 	 * Given a generic tree and an integer n. Find and return the 
 	 * node with next larger element in the Tree i.e. find a node 
 	 * with value just greater than n
+	 * (Solved using ITERATION)
 	 */
-	public static GenericTreeNode<Integer> findNextLargerNode(GenericTreeNode<Integer> root, int n){
+	public static GenericTreeNode<Integer> findNextLargerNode1(GenericTreeNode<Integer> root, int n){
 		if(root == null) {
 			return null;
 		}
@@ -257,19 +258,45 @@ public class GenericTreeUse {
         return ans;
 	}
 	
+	public static GenericTreeNode<Integer> findNextLargerNode2(GenericTreeNode<Integer> root, int n){
+		if(root == null){
+			return null;
+		}
+
+		GenericTreeNode<Integer> nleNode = null;
+		int nle = Integer.MAX_VALUE;
+
+		Queue<GenericTreeNode<Integer>> que = new LinkedList<>();
+		que.add(root);
+		while(!que.isEmpty()){
+			GenericTreeNode<Integer> curr = que.poll();
+
+			for(GenericTreeNode<Integer> child : curr.children){
+				que.add(child);
+			}
+			
+			if (curr.data > n && curr.data < nle) {
+				nle = curr.data;
+				nleNode = curr;
+			}
+		}
+
+		return nleNode;
+	}
+	
 	/*
 	 * Given a generic tree and an integer n. Find and return the 
 	 * node with next larger element in the Tree i.e. find a node 
 	 * with value just greater than n.
 	 * (Solved using RECURSION)
 	 */
-	public static GenericTreeNode<Integer> findNextLargerNodeRec(GenericTreeNode<Integer> root, int n){
+	public static GenericTreeNode<Integer> findNextLargerNodeRec1(GenericTreeNode<Integer> root, int n){
 		if(root == null) {
 			return null;
 		}
 		GenericTreeNode<Integer> ans = null;
         for(GenericTreeNode<Integer> child : root.children){
-        	GenericTreeNode<Integer> tempAns = findNextLargerNodeRec(child, n);
+        	GenericTreeNode<Integer> tempAns = findNextLargerNodeRec1(child, n);
             if(tempAns != null){
                 ans = (ans == null) ? tempAns : new GenericTreeNode<>(Math.min(ans.data, tempAns.data));
             }
@@ -278,6 +305,30 @@ public class GenericTreeUse {
             ans = (ans == null) ? root : new GenericTreeNode<>(Math.min(ans.data, root.data));
         }
         return ans;
+	}
+	
+	public static GenericTreeNode<Integer> findNextLargerNodeRec2(GenericTreeNode<Integer> root, int n){
+		if (root == null) return null;
+
+		int nle = (root.data > n) ? root.data : Integer.MAX_VALUE;
+		GenericTreeNode<Integer> nleNode = (root.data > n) ? root : null;
+
+		for (GenericTreeNode<Integer> child : root.children) {
+			GenericTreeNode<Integer> tempNleNode = findNextLargerNodeRec2(child, n);
+			if (tempNleNode != null) {
+				if (tempNleNode.data < nle) {
+					nle = tempNleNode.data;
+					nleNode = tempNleNode;
+				}
+			}
+		}
+
+		if (nle == Integer.MAX_VALUE) {
+			return null;
+		} else {
+			return nleNode;
+		}
+
 	}
 	
 	/*
