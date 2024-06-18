@@ -702,6 +702,14 @@ public class BinaryTreeUse {
 		return Math.min(root.data, Math.min(rightMin, leftMin));
 	}
 	
+	/*
+	 * Given a binary tree with N number of nodes, 
+	 * check if that input tree is BST (Binary Search Tree). 
+	 * If yes, return true, return false otherwise.
+
+		Note:
+		Duplicate elements should be kept in the right subtree.
+	 */
 	public static boolean isBST1(BinaryTreeNode<Integer> root) {
 		if(root == null) {
 			return true;
@@ -744,6 +752,26 @@ public class BinaryTreeUse {
 		}
 		return isBST3(root.left, min, root.data-1) && 
 				isBST3(root.right, root.data, max);
+	}
+	
+	// Time Complexity -> O(n), Space Complexity -> O(h)
+	public static boolean isBST4(BinaryTreeNode<Integer> root) {
+		return isBST4(root, Integer.MIN_VALUE, Integer.MAX_VALUE);
+	}
+
+	public static boolean isBST4(BinaryTreeNode<Integer> root, int min, int max) {
+		if (root == null) return true;
+		if (min > max) return false;
+
+		boolean leftAns = isBST4(root.left, min, root.data - 1);
+		if (!leftAns) return false;
+
+		boolean rightAns = isBST4(root.right, root.data, max);
+		if (!rightAns) return false;
+
+		if (root.data >= min && root.data <= max) return true;
+
+		return false;
 	}
 	
 	/*
