@@ -852,6 +852,24 @@ public class BinaryTreeUse {
 		else return leftAns;
 	}
     
+    public static int getLCA3(BinaryTreeNode<Integer> root, int a, int b) {
+		if (root == null) return -1;
+
+		if (root.data == a || root.data == b) return root.data;
+
+		if (root.data > a && root.data > b) return getLCA3(root.left, a, b);
+		if (root.data < a && root.data < b) return getLCA3(root.right, a, b);
+
+		int leftAns = getLCA3(root.left, a, b);
+		int rightAns = getLCA3(root.right, a, b);
+
+		if (leftAns == a && rightAns == b) return root.data;
+		if (leftAns == b && rightAns == a) return root.data;
+
+		if (leftAns == -1) return rightAns;
+		else return leftAns;
+	}
+    
     /*
      * Given a BST, convert it into a sorted linked list. 
      * You have to return the head of LL.
