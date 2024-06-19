@@ -782,7 +782,7 @@ public class BinaryTreeUse {
 	 * LCA of two nodes A and B is the lowest or deepest node 
 	 * which has both A and B as its descendants. 
 	 */
-	public static int getLCA(BinaryTreeNode<Integer> root, int a, int b) {
+	public static int getLCA1(BinaryTreeNode<Integer> root, int a, int b) {
 		// Base case
         if(root == null){
             return -1;
@@ -835,6 +835,22 @@ public class BinaryTreeUse {
         }
         return -1;
     }
+    
+    // Better approach (Time complexity -> O(n), Space complexity -> O(h))
+    public static int getLCA2(BinaryTreeNode<Integer> root, int a, int b) {
+		if (root == null) return -1;
+
+		if (root.data == a || root.data == b) return root.data;
+
+		int leftAns = getLCA2(root.left, a, b);
+		int rightAns = getLCA2(root.right, a, b);
+
+		if (leftAns == a && rightAns == b) return root.data;
+		if (leftAns == b && rightAns == a) return root.data;
+
+		if (leftAns == -1) return rightAns;
+		else return leftAns;
+	}
     
     /*
      * Given a BST, convert it into a sorted linked list. 
