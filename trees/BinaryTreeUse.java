@@ -1063,6 +1063,26 @@ public class BinaryTreeUse {
 		}
 		return newAns;
 	}
+	
+	public static ArrayList<Integer> getPath3(BinaryTreeNode<Integer> root, int data){
+		if (root == null) {
+			return new ArrayList<Integer>(0);
+		}
+
+		ArrayList<Integer> tempAns = null;
+		if (root.data == data) {
+			tempAns = new ArrayList<>();
+			tempAns.add(root.data);
+			return tempAns;
+		} else if (root.data > data) tempAns = getPath3(root.left, data);
+		else tempAns = getPath3(root.right, data);
+
+		if (tempAns.size() != 0) {
+			tempAns.add(root.data);
+		}
+
+		return tempAns;
+	}
     
 	/*
 	 * Given a Binary tree, find the largest BST subtree. That is, 
